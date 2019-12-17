@@ -15,10 +15,11 @@ SUB_PATTRN = re.compile(r'document\.cookie="(.+)";location.+$')
 
 class Scraper:
 
-    def __init__(self, domains: list, headers=None, proxies=None):
+    def __init__(self, domains: list, headers=None, proxies=None, logger=None):
         self._session = requests.session()
         self._domains = domains
         self._session.cookies = CookieJar()
+        self.logger = logger
 
         if headers:
             self._session.headers = headers
@@ -32,10 +33,13 @@ class Scraper:
         r = self._get(url, **kwargs)
 
         if Scraper._is_challenge_page(r):
-            cookie = Scraper._execute_challenge(Scraper._transform_js(Scraper._get_js(r)))
+            cookie_str = Scraper._execute_challenge(Scraper._transform_js(Scraper._get_js(r)))
+
+            if self.logger:
+                self.logger.debug("Executed challenge, got %s" % (cookie_from_string(cookie_str, ""),))
 
             for domain in self._domains:
-                self._session.cookies.set_cookie(cookie_from_string(cookie, domain))
+                self._session.cookies.set_cookie(cookie_from_string(cookie_str, domain))
 
             return self.get(url, **kwargs)
         return r
