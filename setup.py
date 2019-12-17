@@ -8,6 +8,6 @@ setup(
     author_email="me@simon987.net",
     packages=["vanwanet_scrape"],
     install_requires=[
-        "requests", "bs4", "git+git://github.com/simon987/hexlib.git",
+        "requests", "bs4", "hexlib @ git+git://github.com/simon987/hexlib.git",
     ]
 )
