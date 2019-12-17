@@ -58,13 +58,14 @@ class Scraper:
     @staticmethod
     def _transform_js(js):
         # Print cookie to console instead
-        challenge = SUB_PATTRN.sub(r'console.log("\1");', js)
+        challenge = SUB_PATTRN.sub(r'res="\1";', js)
         return AES + challenge
 
     @staticmethod
     def _execute_challenge(js):
+        js = js.replace("`", "")
+        js = "let sb={};vm = require('vm');vm.runInNewContext(`" + js + "`, sb, {timeout: 3000});console.log(sb.res)"
 
-        # TODO: run in some kind of sandbox
         node = subprocess.Popen(
             ["node", "-e", js], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             universal_newlines=True

@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="vanwanet_scrape",
-    version="1.1",
+    version="1.2",
     description="VanwaTech DDoS protection bypass",
     author="simon987",
     author_email="me@simon987.net",
