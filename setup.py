@@ -9,5 +9,8 @@ setup(
     packages=["vanwanet_scrape"],
     install_requires=[
         "requests", "bs4", "hexlib @ git+git://github.com/simon987/hexlib.git",
-    ]
+    ],
+    package_data={
+        "vanwanet_scrape": ["*.js"],
+    }
 )

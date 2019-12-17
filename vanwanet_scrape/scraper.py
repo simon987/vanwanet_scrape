@@ -1,3 +1,4 @@
+import os
 import re
 import subprocess
 from http.cookiejar import CookieJar
@@ -6,7 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 from hexlib.web import cookie_from_string
 
-with open("aes.js", "r") as f:
+with open(os.path.join(os.path.dirname(__file__), "aes.js"), "r") as f:
     AES = f.read()
 
 SUB_PATTRN = re.compile(r'document\.cookie="(.+)";location.+$')
